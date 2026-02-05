@@ -109,11 +109,11 @@ land_use= pd.read_csv('land-use-over-the-long-term.csv', encoding='latin1')
 #rename Entity to Area
 land_use.rename(columns={'Entity': 'Area'}, inplace=True)
 
-# Sum the Land use: 'Built-up area', 'Land use: Grazingland', 'Land use: Cropland' a new column 'land_use'
-land_use['land_use'] = land_use[['Land use: Built-up area', 'Land use: Grazingland', 'Land use: Cropland']].sum(axis=1)
+# Sum the Land use: 'Built-up Area', 'Grazing', 'Cropland' into a new column 'land_use'
+land_use['land_use'] = land_use[['Built-up Area', 'Grazing', 'Cropland']].sum(axis=1)
 
 # Assuming 'joiner' is your DataFrame
-columns_to_delete = ['Land use: Built-up area', 'Land use: Grazingland', 'Land use: Cropland']
+columns_to_delete = ['Built-up Area', 'Grazing', 'Cropland']
 land_use.drop(columns=columns_to_delete, inplace=True)
 
 # drop 'code' column
