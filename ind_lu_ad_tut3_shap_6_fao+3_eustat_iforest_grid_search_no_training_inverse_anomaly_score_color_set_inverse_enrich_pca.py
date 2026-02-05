@@ -1,55 +1,28 @@
-import csv
-import numpy as np
-from sklearn.ensemble import IsolationForest
-
 import zipfile
-import pandas as pd
-import requests
 import numpy as np
-import plotly.graph_objects as go
-import matplotlib.pyplot as plt
-from sklearn.ensemble import IsolationForest
-import matplotlib.pyplot as plt
-from sklearn.ensemble import IsolationForest
-from sklearn.model_selection import train_test_split 
-from matplotlib import pyplot
-from numpy.random import normal, gamma
-from numpy import hstack
-import networkx as nx
-import matplotlib.pyplot as plt
-from pgmpy.models import BayesianModel
-from pgmpy.estimators import MaximumLikelihoodEstimator
-from sklearn.preprocessing import StandardScaler
-from pgmpy.models import BayesianNetwork
-from pgmpy.models import BayesianModel
-from pgmpy.factors.discrete import TabularCPD
-from pgmpy.inference import VariableElimination
-from pgmpy.estimators import BayesianEstimator
-import seaborn as sns
-import matplotlib.pyplot as plt
-from causalinference import CausalModel
-import warnings
-from dowhy import CausalModel
 import pandas as pd
-from dowhy import CausalModel
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-import networkx as nx
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.graph_objects as go
+from sklearn.ensemble import IsolationForest
+from sklearn.preprocessing import StandardScaler
+import warnings
 warnings.filterwarnings("ignore")
 
-df_ref= pd.read_csv(r'c:\FAOSTAT\reference_europe.csv', encoding='latin1')
+df_ref= pd.read_csv('FAOSTAT/reference_europe.csv', encoding='latin1')
 # extract only Area Code
 df_ref = df_ref[['Area']]
 #groupping by Area
 df_ref = df_ref.groupby('Area').size().reset_index(name='counts')
 
 #pesticides data
-zip_file_path = r'c:\FAOSTAT\Inputs_Pesticides_Use_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Inputs_Pesticides_Use_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Inputs_Pesticides_Use_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df = pd.read_csv(r'c:\FAOSTAT_extract\Inputs_Pesticides_Use_E_All_Data_(Normalized).csv', encoding='latin1')
+df = pd.read_csv('FAOSTAT_extract/Inputs_Pesticides_Use_E_All_Data_(Normalized).csv', encoding='latin1')
 #filtered pesticides data
 filtered_pest = df.loc[(df['Element'] == 'Agricultural Use')]
 filtered_pest = filtered_pest.loc[(df['Item'] == 'Pesticides (total)')]
@@ -58,13 +31,13 @@ filtered_pest = filtered_pest[filtered_pest['Area'].isin(df_ref['Area'])]
 
 
 # fertilizers data
-zip_file_path = r'c:\FAOSTAT\Inputs_FertilizersNutrient_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Inputs_FertilizersNutrient_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Inputs_FertilizersNutrient_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df = pd.read_csv(r'c:\FAOSTAT_extract\Inputs_FertilizersNutrient_E_All_Data_(Normalized).csv', encoding='latin1')
+df = pd.read_csv('FAOSTAT_extract/Inputs_FertilizersNutrient_E_All_Data_(Normalized).csv', encoding='latin1')
 
 #filtered fertilizers data_Nitrogen
 filtered_fert_N = df.loc[(df['Element'] == 'Agricultural Use')]
@@ -158,13 +131,13 @@ joiner3 = pd.merge(land_use, joiner1, on=['Area','Year'], how='inner')
 
 
 # Maize
-zip_file_path = r'c:\FAOSTAT\Production_Crops_Livestock_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Production_Crops_Livestock_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Production_Crops_Livestock_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df_o = pd.read_csv(r'c:\FAOSTAT_extract\Production_Crops_Livestock_E_All_Data_(Normalized).csv', encoding='latin1')
+df_o = pd.read_csv('FAOSTAT_extract/Production_Crops_Livestock_E_All_Data_(Normalized).csv', encoding='latin1')
 #filtered maize data
 filtered_df_m = df_o.loc[(df_o['Item'] == 'Maize (corn)')]
 filtered_df_m = filtered_df_m.loc[(df_o['Element'] == 'Yield')]
@@ -182,13 +155,13 @@ joiner4.rename(columns={'Value': 'Maize'}, inplace=True)
 
 
 #Temperature data
-zip_file_path = r'c:\FAOSTAT\Environment_Temperature_change_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Environment_Temperature_change_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Environment_Temperature_change_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df = pd.read_csv(r'c:\FAOSTAT_extract\Environment_Temperature_change_E_All_Data_(Normalized).csv', encoding='latin1')
+df = pd.read_csv('FAOSTAT_extract/Environment_Temperature_change_E_All_Data_(Normalized).csv', encoding='latin1')
 #filtered temperature data
 filtered_temp = df.loc[(df['Months'] == 'Meteorological year')]
 filtered_temp = filtered_temp.loc[(df['Element'] == 'Temperature change')]
@@ -204,13 +177,13 @@ joiner5 = pd.merge(joiner4, filtered_temp, on=['Area','Year'], how='inner')
 
 
 #population data
-zip_file_path = r'c:\FAOSTAT\Population_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Population_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Population_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df = pd.read_csv(r'c:\FAOSTAT_extract\Population_E_All_Data_(Normalized).csv', encoding='latin1')
+df = pd.read_csv('FAOSTAT_extract/Population_E_All_Data_(Normalized).csv', encoding='latin1')
 #filtered population data
 filtered_pop = df.loc[(df['Element'] == 'Total Population - Both sexes')]
 # row filter with reference list
@@ -226,13 +199,13 @@ joiner6 = pd.merge(joiner5, filtered_pop, on=['Area','Year'], how='inner')
 
 
 # Rape or colza seed
-zip_file_path = r'c:\FAOSTAT\Production_Crops_Livestock_E_All_Data_(Normalized).zip'
+zip_file_path = 'FAOSTAT/Production_Crops_Livestock_E_All_Data_(Normalized).zip'
 file_path_inside_zip = 'Production_Crops_Livestock_E_All_Data_(Normalized).csv'  # Provide the correct path inside the ZIP archive
 # Extract the CSV file from the ZIP archive
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extract(file_path_inside_zip, r'c:\FAOSTAT_extract')  # Provide the correct path to extract the file
+    zip_ref.extract(file_path_inside_zip, 'FAOSTAT_extract')  # Provide the correct path to extract the file
 # Load the CSV file into a DataFrame
-df_o = pd.read_csv(r'c:\FAOSTAT_extract\Production_Crops_Livestock_E_All_Data_(Normalized).csv', encoding='latin1')
+df_o = pd.read_csv('FAOSTAT_extract/Production_Crops_Livestock_E_All_Data_(Normalized).csv', encoding='latin1')
 #filtered rapeseed data
 filtered_df_r = df_o.loc[(df_o['Item'] == 'Rape or colza seed')]
 filtered_df_r = filtered_df_r.loc[(df_o['Element'] == 'Yield')]

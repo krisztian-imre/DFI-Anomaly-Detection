@@ -1,9 +1,17 @@
 # Data files - FAOSTAT datasets
 *.zip
-*.csv
-*.xlsx
-c:\FAOSTAT\
-c:\FAOSTAT_extract\
+FAOSTAT/
+FAOSTAT_extract/
+FAOSTAT_extract_old/
+
+# But track these specific CSV files needed for analysis
+!ghg_emissions.csv
+!precip.csv
+!renewable_freshwater.csv
+!land-use-over-the-long-term.csv
+
+# Ignore template files
+*_template.csv
 
 # Generated outputs
 *.html
@@ -11,6 +19,11 @@ c:\FAOSTAT_extract\
 *.jpg
 *.jpeg
 *.pdf
+
+# Virtual Environment
+venv/
+env/
+ENV/
 
 # Python
 __pycache__/
